@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Raphaël BILLOT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --c1: #D4A574;
+      --c2: #E8C4A0;
+      --c3: #2D3561;
+      --c4: #8B6F47;
+      --text: #E8DCC8;
+      --muted: #9E9B94;
+      --surface: rgba(255,255,255,0.05);
+      --surface-strong: rgba(255,255,255,0.1);
+      --border: rgba(255,255,255,0.08);
+      --bg: #0f1116;
+      --bg-alt: #14171d;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: radial-gradient(circle at 15% 10%, rgba(212,165,116,0.14), transparent 18%),
+                  radial-gradient(circle at 90% 15%, rgba(51,128,255,0.12), transparent 20%),
+                  linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding-top: 90px;
+    }
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+    .site-header {
+      position: fixed; inset: 0 auto auto 0;
+      width: 100%;
+      z-index: 200;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(11, 13, 19, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .logo {
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      font-size: 1rem;
+    }
+    .logo strong {
+      background: linear-gradient(90deg, var(--c1), var(--c2));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .top-nav {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .top-nav a {
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.65rem 1rem;
+      border-radius: 999px;
+      transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    }
+    .top-nav a::after {
+      content: '';
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 6px;
+      height: 3px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, rgba(212,165,116,0.0), rgba(212,165,116,0.9), rgba(232,196,160,0.0));
+      opacity: 0;
+      transform: translateY(6px) scaleX(0.6);
+      transition: opacity 0.28s ease, transform 0.36s cubic-bezier(.2,.9,.2,1);
+      pointer-events: none;
+    }
+    .top-nav a:hover {
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+    .top-nav a.active {
+      color: #111;
+      background: linear-gradient(135deg, rgba(212,165,116,0.95), rgba(232,196,160,0.95));
+      box-shadow: 0 10px 30px rgba(0,0,0,0.16);
+    }
+    .top-nav a.active::after { opacity: 1; transform: translateY(0) scaleX(1); }
+    .btn-header {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.4rem;
+      border-radius: 999px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--c1), var(--c2));
+      color: #111;
+      text-decoration: none;
+      box-shadow: 0 20px 45px rgba(212,165,116,0.22);
+    }
+    main {
+      width: min(1150px, calc(100% - 4rem));
+      margin: 0 auto;
+    }
+    section {
+      padding: 6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    section:last-child { border-bottom: none; }
+    .section-heading {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+      position: relative;
+      padding-left: 1rem;
+    }
+    .section-heading::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--c1), var(--c2));
+    }
+    .section-number {
+      color: var(--c1);
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.4rem, 4.2vw, 3.4rem);
+      line-height: 1.05;
+      max-width: 10ch;
+    }
+    .section-title span {
+      color: var(--c2);
+    }
+    .section-title {
+      text-shadow: 0 10px 35px rgba(0,0,0,0.14);
+    }
+    .section-text {
+      max-width: 730px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3rem;
+      align-items: center;
+      min-height: calc(100vh - 120px);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(212,165,116,0.12), transparent 22%),
+                  radial-gradient(circle at 85% 15%, rgba(51,128,255,0.14), transparent 18%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: rgba(51,128,255,0.08);
+      filter: blur(45px);
+      right: -110px;
+      bottom: -80px;
+      pointer-events: none;
+    }
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 700;
+      color: var(--c1);
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+    }
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3.8rem, 6vw, 5.6rem);
+      line-height: 0.98;
+      margin-bottom: 1.4rem;
+    }
+    .hero-title span {
+      color: var(--c2);
+    }
+    .hero-copy p {
+      max-width: 680px;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.95rem 1.8rem;
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      box-shadow: 0 18px 30px rgba(0,0,0,0.12);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--c1), var(--c2));
+      color: #111;
+    }
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      left: -60%;
+      top: -30%;
+      width: 40%;
+      height: 160%;
+      background: linear-gradient(120deg, rgba(255,255,255,0.25), rgba(255,255,255,0.06));
+      transform: rotate(-18deg) translateX(0);
+      transition: transform 0.9s ease, opacity 0.6s ease;
+      opacity: 0.0;
+      pointer-events: none;
+    }
+    .btn-primary:hover::after { transform: translateX(240%); opacity: 0.95; }
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text);
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 24px 42px rgba(0,0,0,0.18);
+    }
+    .hero-cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .glass-card {
+      padding: 1.6rem;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 35px 80px rgba(0,0,0,0.22);
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+    .glass-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(212,165,116,0.35);
+    }
+    .glass-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+    }
+    .glass-card p {
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .glass-card span {
+      color: var(--c1);
+      font-weight: 700;
+    }
+    .glass-card.large {
+      grid-column: span 2;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .about-photo {
+      border-radius: 30px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 35px 90px rgba(0,0,0,0.25);
+      min-height: 420px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+    }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .about-copy h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 1.25rem;
+    }
+    .about-copy p {
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+    }
+    .tag-pill {
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+    }
+    .feature-card {
+      padding: 1.8rem;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      min-height: 240px;
+    }
+    .feature-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.01em;
+    }
+    .feature-card p {
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.18);
+    }
+    .timeline {
+      display: grid;
+      gap: 1.4rem;
+    }
+    .timeline-item {
+      position: relative;
+      padding: 1.6rem;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 6px;
+      background: linear-gradient(180deg, var(--c1), var(--c2));
+      border-radius: 0 999px 999px 0;
+    }
+    .timeline-item .date {
+      display: inline-block;
+      text-transform: uppercase;
+      color: var(--c1);
+      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .timeline-item h4 {
+      margin-bottom: 0.6rem;
+      font-size: 1.16rem;
+    }
+    .timeline-item .meta {
+      display: block;
+      color: var(--c2);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    .timeline-item p {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 0.96rem;
+    }
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    .timeline-tag {
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+    }
+    .project-card {
+      padding: 1.8rem;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: 0 22px 50px rgba(0,0,0,0.16);
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(212,165,116,0.25);
+      box-shadow: 0 35px 75px rgba(0,0,0,0.18);
+    }
+    .project-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.08rem;
+    }
+    .project-card p {
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: auto;
+    }
+    .project-tag {
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+    }
+    .cert-card {
+      padding: 1.8rem;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .cert-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(212,165,116,0.25);
+    }
+    .cert-year {
+      color: var(--c1);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+    }
+    .cert-progress {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .veille-card {
+      padding: 2rem;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.16);
+    }
+    .veille-theme {
+      display: inline-flex;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--c2);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+    .veille-sources a {
+      color: var(--text);
+      text-decoration: underline;
+    }
+    .contact-panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 25px 65px rgba(0,0,0,0.16);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .contact-panel:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 35px 85px rgba(0,0,0,0.2);
+    }
+    .contact-link {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .contact-link:hover {
+      transform: translateX(3px);
+      border-color: rgba(212,165,116,0.24);
+      background: rgba(255,255,255,0.12);
+    }
+    .contact-link .icon {
+      background: rgba(255,255,255,0.12);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+    .contact-grid,
+    .cards-grid {
+      display: grid;
+      gap: 2rem;
+    }
+    .contact-grid { grid-template-columns: 1fr 1fr; }
+    .contact-panel {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 2rem;
+    }
+    .contact-panel h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .contact-panel p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1.6rem;
+      font-size: 1rem;
+    }
+    .contact-links {
+      display: grid;
+      gap: 0.9rem;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 1rem 1.2rem;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      text-decoration: none;
+      color: var(--text);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .contact-link:hover { transform: translateX(3px); border-color: rgba(255,255,255,0.16); }
+    .contact-link .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.08);
+      font-size: 1rem;
+    }
+    .form-field { margin-bottom: 1rem; }
+    .form-field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 1rem 1.1rem;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-size: 0.95rem;
+      outline: none;
+    }
+    .form-textarea { min-height: 160px; resize: vertical; }
+    .form-input:focus,
+    .form-textarea:focus { border-color: rgba(212,165,116,0.45); }
+    .btn-send {
+      margin-top: 0.5rem;
+      border: none;
+      border-radius: 999px;
+      padding: 0.95rem 1.6rem;
+      background: linear-gradient(135deg, var(--c1), var(--c2));
+      color: #111;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .btn-send:hover { transform: translateY(-2px); opacity: 0.95; }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      color: var(--muted);
+      padding: 2rem 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--c1), var(--c2));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    @media (max-width: 960px) {
+      .site-header { padding: 1rem 1.25rem; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-cards { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .top-nav { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    }
+    @media (max-width: 680px) {
+      body { padding-top: 110px; }
+      section { padding: 5rem 0; }
+      .site-header { flex-direction: column; align-items: flex-start; }
+      .btn-header { width: 100%; justify-content: center; }
+      .contact-panel { padding: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">Raphaël <strong>BILLOT</strong></div>
+    <nav class="top-nav">
+      <a href="#hero" class="nav-link active">Accueil</a>
+      <a href="#apropos" class="nav-link">À propos</a>
+      <a href="#scolaire" class="nav-link">Parcours</a>
+      <a href="#projets" class="nav-link">Projets</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+    <a href="#contact" class="btn-header">Contact</a>
+  </header>
+  <main>
+ 
+    <section id="hero" class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Étudiant BTS SIO — Option SISR</span>
+        <h1 class="hero-title">Je prépare mon avenir dans la Marine Nationale.</h1>
+        <p>
+          Je suis Raphaël BILLOT, étudiant en BTS SIO spécialisé en systèmes et réseaux.
+          Je construis des infrastructures fiables, sécurise des environnements et accompagne les utilisateurs.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">Me contacter</a>
+          <a href="#projets" class="btn btn-secondary">Voir mes projets</a>
+        </div>
+      </div>
+      <div class="hero-cards">
+        <article class="glass-card">
+          <span>20 ans</span>
+          <p>Motivé, rigoureux et prêt à apprendre pour réussir dans un environnement exigeant.</p>
+        </article>
+        <article class="glass-card">
+          <span>Marine Nationale</span>
+          <p>Objectif d'intégration avec une préparation physique et technique solide.</p>
+        </article>
+        <article class="glass-card large">
+          <h3>Spécialités</h3>
+          <p>Réseau, administration système, cybersécurité, support et conduite de projets techniques.</p>
+        </article>
+        <article class="glass-card">
+          <span>Projets</span>
+          <p>Installations réseau, serveurs DHCP, IDS et infrastructures sécurisées pour des usages réels.</p>
+        </article>
+      </div>
+    </section>
+ 
+    <!-- ══ 01 — À PROPOS ══ -->
+    <section id="apropos">
+      <div class="section-heading">
+        <span class="section-number">// 01</span>
+        <h2 class="section-title">À propos <span>de moi</span></h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-photo">
+          <img src="profil.jpg" alt="Photo de Raphaël BILLOT" />
+        </div>
+        <div class="about-copy">
+          <h3>Qui suis-je ?</h3>
+          <p>
+            Je suis Raphaël BILLOT, étudiant en BTS SIO option SISR. Je prépare mon avenir dans la Marine Nationale
+            en développant des compétences solides en réseaux, sécurité et support technique.
+          </p>
+          <p>
+            Passionné par les environnements techniques et les missions terrain, je construis des solutions claires,
+            fiables et faciles à utiliser pour mes utilisateurs.
+          </p>
+          <div class="tag-list">
+            <span class="tag-pill">⚓ Marine Nationale</span>
+            <span class="tag-pill">🛠️ Réseaux & sécurité</span>
+            <span class="tag-pill">🚗 4x4 & mécanique</span>
+            <span class="tag-pill">🎯 Résultat orienté</span>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ══ 02 — COMPÉTENCES ══ -->
+    <section id="competences">
+      <div class="section-heading">
+        <span class="section-number">// 02</span>
+        <h2 class="section-title">Compétences <span>clés</span></h2>
+      </div>
+      <div class="cards-grid">
+        <article class="feature-card reveal">
+          <h3>Réseaux & infrastructure</h3>
+          <p>Conception de réseaux filaires et Wi-Fi, administration d'équipements et optimisation des performances.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">VLAN</span>
+            <span class="timeline-tag">DHCP</span>
+            <span class="timeline-tag">Switch / Routeur</span>
+          </div>
+        </article>
+        <article class="feature-card reveal">
+          <h3>Cybersécurité</h3>
+          <p>Surveillance, protection et audits de systèmes pour limiter les risques et assurer la continuité du service.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">IDS</span>
+            <span class="timeline-tag">RGPD</span>
+            <span class="timeline-tag">Samba</span>
+          </div>
+        </article>
+        <article class="feature-card reveal">
+          <h3>Support & gestion</h3>
+          <p>Accompagnement utilisateur, documentation et intervention rapide pour maintenir les activités opérationnelles.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Support</span>
+            <span class="timeline-tag">Ticketing</span>
+            <span class="timeline-tag">Travail d'équipe</span>
+          </div>
+        </article>
+      </div>
+    </section>
+ 
+    <!-- ══ 03 — PARCOURS SCOLAIRE ══ -->
+    <section id="scolaire">
+      <div class="section-heading">
+        <span class="section-number">// 03</span>
+        <h2 class="section-title">Mon <span>parcours</span></h2>
+      </div>
+      <div class="timeline">
+        <article class="timeline-item reveal">
+          <span class="date">2025 — 2026</span>
+          <h4>BTS SIO — Option SISR</h4>
+          <span class="meta">Lycée Dick Ukeiwe, Dumbéa</span>
+          <p>
+            Formation en systèmes et réseaux, administration de serveurs, cybersécurité et support utilisateur.
+            Projets pratiques en entreprise et stages pour renforcer mes compétences techniques.
+          </p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Réseau</span>
+            <span class="timeline-tag">Cybersécurité</span>
+            <span class="timeline-tag">Support</span>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <span class="date">2022 — 2024</span>
+          <h4>Baccalauréat STMG — Spécialité SIG</h4>
+          <span class="meta">Lycée Dick Ukeiwe</span>
+          <p>
+            Découverte des systèmes d'information et du management, avec un intérêt croissant pour l'informatique et le numérique.
+          </p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">SIG</span>
+            <span class="timeline-tag">Numérique</span>
+            <span class="timeline-tag">Management</span>
+          </div>
+        </article>
+      </div>
+    </section>
+ 
+    <!-- ══ 04 — EXPÉRIENCES ══ -->
+    <section id="professionnel">
+      <div class="section-heading">
+        <span class="section-number">// 04</span>
+        <h2 class="section-title">Expériences <span>professionnelles</span></h2>
+      </div>
+      <div class="cards-grid reveal">
+        <article class="glass-card large">
+          <h3>Mon CV</h3>
+          <p>Consulte et télécharge mon CV pour en savoir plus sur mon parcours, mes compétences et mes projets.</p>
+          <div class="hero-actions">
+            <a href="raphael_billot_cv (1).jpg" target="_blank" class="btn btn-primary">Voir le CV</a>
+            <a href="raphael_billot_cv (1).jpg" download class="btn btn-secondary">Télécharger</a>
+          </div>
+        </article>
+      </div>
+ 
+      <div class="timeline">
+        <article class="timeline-item reveal">
+          <span class="date">2021</span>
+          <h4>Ducos Quincaillerie</h4>
+          <span class="meta">Stage découverte</span>
+          <p>Première immersion professionnelle en commerce, service client et gestion de magasin.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Découverte</span>
+            <span class="timeline-tag">Commerce</span>
+            <span class="timeline-tag">Stage</span>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <span class="date">2022 — 2023</span>
+          <h4>Préparation Militaire Marine</h4>
+          <span class="meta">Programme de préparation</span>
+          <p>Préparation physique et mentale pour intégrer la Marine Nationale, axée sur la discipline et le travail en équipe.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Marine</span>
+            <span class="timeline-tag">Militaire</span>
+            <span class="timeline-tag">Préparation</span>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <span class="date">2023</span>
+          <h4>Fonds Social de l'Habitat</h4>
+          <span class="meta">Stage</span>
+          <p>Découverte du secteur social, accompagnement administratif et gestion de dossiers bénéficiaires.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Social</span>
+            <span class="timeline-tag">Administration</span>
+            <span class="timeline-tag">Accompagnement</span>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <span class="date">Été 2024</span>
+          <h4>Sodemo — Port Moselle</h4>
+          <span class="meta">Job d'été</span>
+          <p>Assistance logistique et manutention au port, participation aux opérations de chargement.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Logistique</span>
+            <span class="timeline-tag">Portuaire</span>
+            <span class="timeline-tag">Manutention</span>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <span class="date">Oct. 2025 — Nov. 2025</span>
+          <h4>La Calédonienne de Solutions Business</h4>
+          <span class="meta">Stage BTS SIO — 1ère année</span>
+          <p>Initiation aux services informatiques d'entreprise, support utilisateur et découverte des solutions métiers.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Support</span>
+            <span class="timeline-tag">BTS SIO</span>
+            <span class="timeline-tag">Solutions business</span>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <span class="date">Fin 2025 — Début 2026</span>
+          <h4>Ducos Quincaillerie</h4>
+          <span class="meta">Job d'été — Fin 2025 / Début 2026</span>
+          <p>Service client, gestion des stocks et accueil en magasin pour améliorer l'organisation et le service.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Accueil</span>
+            <span class="timeline-tag">Stocks</span>
+            <span class="timeline-tag">Relation client</span>
+          </div>
+        </article>
+      </div>
+    </section>
+ 
+    <!-- ══ 05 — PROJETS ══ -->
+    <section id="projets">
+      <div class="section-heading">
+        <span class="section-number">// 05</span>
+        <h2 class="section-title">Mes <span>projets</span></h2>
+      </div>
+      <div class="project-grid">
+        <article class="project-card reveal">
+          <h3>Refonte d’un réseau d’entreprise</h3>
+          <p>Analyse et segmentation pour sécuriser et optimiser le réseau d'une organisation.</p>
+          <div class="project-tags">
+            <span class="project-tag">VLAN</span>
+            <span class="project-tag">Wi-Fi</span>
+            <span class="project-tag">Cisco</span>
+          </div>
+        </article>
+        <article class="project-card reveal">
+          <h3>Veille IA et cybersécurité</h3>
+          <p>Suivi des tendances pour anticiper les risques et opportunités dans les environnements sécurisés.</p>
+          <div class="project-tags">
+            <span class="project-tag">IA</span>
+            <span class="project-tag">Cyber</span>
+            <span class="project-tag">Marine</span>
+          </div>
+        </article>
+        <article class="project-card reveal">
+          <h3>Installation d’un IDS SURICATA</h3>
+          <p>Déploiement d'un système de détection des intrusions pour monitorer le trafic réseau.</p>
+          <div class="project-tags">
+            <span class="project-tag">IDS</span>
+            <span class="project-tag">Suricata</span>
+            <span class="project-tag">Monitoring</span>
+          </div>
+        </article>
+        <article class="project-card reveal">
+          <h3>Serveur DHCP automatisé</h3>
+          <p>Configuration d'un serveur DHCP pour automatiser l'attribution des adresses IP.</p>
+          <div class="project-tags">
+            <span class="project-tag">DHCP</span>
+            <span class="project-tag">Infrastructure</span>
+            <span class="project-tag">Automation</span>
+          </div>
+        </article>
+        <article class="project-card reveal">
+          <h3>Serveur Samba de partage</h3>
+          <p>Création d'un espace de stockage partagé sécurisé pour un usage collaboratif.</p>
+          <div class="project-tags">
+            <span class="project-tag">Samba</span>
+            <span class="project-tag">Partage</span>
+            <span class="project-tag">Sécurité</span>
+          </div>
+        </article>
+      </div>
+    </section>
+ 
+    <!-- ══ 06 — CERTIFICATIONS ══ -->
+    <section id="certifications">
+      <div class="section-heading">
+        <span class="section-number">// 06</span>
+        <h2 class="section-title">Certifications</h2>
+      </div>
+      <div class="cert-grid">
+        <div class="cert-card c-orange reveal">
+          <div class="cert-year">2025 / 2026</div>
+          <h3>PIX</h3>
+          <div class="cert-progress">504 Points PIX</div>
+          <p>Certification nationale en compétences numériques, collaboration et sécurité des données.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Sécurité</span>
+            <span class="timeline-tag">Numérique</span>
+            <span class="timeline-tag">Certification</span>
+          </div>
+        </div>
+        <div class="cert-card c-blue reveal">
+          <div class="cert-year">2025 / 2026</div>
+          <h3>Cisco NetAcad</h3>
+          <div class="cert-progress">Terminé</div>
+          <p>Support et sécurité des réseaux : diagnostic, prévention et administration d'un réseau sécurisé.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Cisco</span>
+            <span class="timeline-tag">Réseau</span>
+            <span class="timeline-tag">Sécurité</span>
+          </div>
+        </div>
+        <div class="cert-card c-blue reveal">
+          <div class="cert-year">2025</div>
+          <h3>CNIL — L'Atelier RGPD</h3>
+          <div class="cert-progress">En cours</div>
+          <p>Attestation de connaissances en protection des données personnelles et conformité RGPD.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">RGPD</span>
+            <span class="timeline-tag">Données</span>
+            <span class="timeline-tag">Conformité</span>
+          </div>
+        </div>
+        <div class="cert-card c-purple reveal">
+          <div class="cert-year">2026</div>
+          <h3>Cybersécurité maritime</h3>
+          <div class="cert-progress">En cours</div>
+          <p>Formation en cybersécurité appliquée aux environnements maritimes.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Cybersécurité</span>
+            <span class="timeline-tag">Maritime</span>
+            <span class="timeline-tag">Fun-mooc</span>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ══ 07 — VEILLE TECHNO ══ -->
+    <section id="veille">
+      <div class="section-heading">
+        <span class="section-number">// 07</span>
+        <h2 class="section-title">Veille <span>technologique</span></h2>
+      </div>
+      <div class="veille-card reveal">
+        <span class="veille-theme">Thème de veille</span>
+        <h3>L'IA dans les armées</h3>
+        <p>
+          La technologie de l'IA se déploie dans les forces armées, avec des applications pour la surveillance,
+          l’aide à la décision et la cybersécurité.
+        </p>
+        <div class="veille-sources">
+          <span class="veille-badge">Actualités</span>
+          📰 Source principale : <strong>Défense.gouv.fr</strong> — <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwipq_z4-8iUAxVlSmwGHW1QL2UQFnoECA0QAQ&url=http%3A%2F%2Fwww.defense.gouv.fr%2Factualites%2Fcomprendre-lia-defense&usg=AOvVaw1X_aEs3hNP7cE9Qa-nBGHB&opi=89978449" target="_blank" rel="noreferrer noopener">Comprendre l’IA et la défense</a>
+          📰 Article récent : <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=newssearch&cd=&cad=rja&uact=8&ved=2ahUKEwj9sMCKkrWUAxX5g68BHfojIAYQxfQBKAB6BAgKEAE&url=https%3A%2F%2Fwww.lindependant.fr%2F2026%2F05%2F10%2Fguerre-en-ukraine-la-tourelle-antidrone-khyzhak-dotee-dune-ia-utilisee-pour-la-premiere-fois-au-combat-par-larmee-ukrainienne-13364672.php&usg=AOvVaw1Agn3rJBQfJQyNvCHmN2rG&opi=89978449" target="_blank" rel="noreferrer noopener">Lindependant — tourelle antidrone Khyzhak</a>
+          📰 Article récent : <a href="https://www.rtbf.be/article/claude-l-ia-qui-aide-l-armee-americaine-a-frapper-l-iran-11690099" target="_blank" rel="noreferrer noopener">RTBF — Claude, l’IA qui aide l’armée américaine</a>
+        </div>
+        <div class="tags">
+          <span class="tag-item">Anthropic</span>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ══ 08 — CONTACT ══ -->
+    <section id="contact">
+      <div class="section-heading">
+        <span class="section-number">// 08</span>
+        <h2 class="section-title">Me <span>contacter</span></h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-panel reveal">
+          <h3>N'hésite pas à me contacter !</h3>
+          <p>
+            Disponible pour des stages, alternances et projets. Je réponds généralement sous 24h.
+          </p>
+          <div class="contact-links">
+            <a href="tel:+687822297" class="contact-link">
+              <span class="icon">📞</span>
+              +687 82 22 97
+            </a>
+            <a href="mailto:raphbil22@gmail.com" class="contact-link">
+              <span class="icon">✉️</span>
+              raphbil22@gmail.com
+            </a>
+            <!-- GitHub link removed at user's request -->
+            <a href="https://www.linkedin.com/in/joey-dill-960a0b362" target="_blank" class="contact-link">
+              <span class="icon">🔗</span>
+              LinkedIn — Raphaël BILLOT
+            </a>
+          </div>
+        </div>
+        <div class="contact-panel reveal">
+          <h3>Envoie-moi un message</h3>
+          <form onsubmit="sendMsg(event)">
+            <div class="form-field">
+              <label for="name">Nom</label>
+              <input id="name" class="form-input" type="text" placeholder="Votre nom" required />
+            </div>
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input id="email" class="form-input" type="email" placeholder="votre@email.com" required />
+            </div>
+            <div class="form-field">
+              <label for="message">Message</label>
+              <textarea id="message" class="form-textarea" placeholder="Votre message..."></textarea>
+            </div>
+            <button type="submit" class="btn-send">Envoyer le message 🚀</button>
+          </form>
+        </div>
+      </div>
+    </section>
+ 
+    <footer>
+      <span class="footer-brand">Raphaël BILLOT</span>
+      <span>Nouvelle-Calédonie · BTS SIO 2026 · Disponible pour des projets</span>
+    </footer>
+ 
+  </main>
+ 
+  <script>
+    /* ── Scroll Reveal ── */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      // stagger reveals for nicer effect (reset per row by modulo)
+      el.style.transitionDelay = `${(i % 8) * 80}ms`;
+      io.observe(el);
+    });
+ 
+    /* ── Active nav link ── */
+    const sections = document.querySelectorAll('section[id]');
+    const links = document.querySelectorAll('.top-nav a');
+    const navIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.classList.remove('active'));
+          const link = document.querySelector(`.top-nav a[href="#${e.target.id}"]`);
+          if (link) link.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => navIO.observe(s));
+ 
+    /* ── Form ── */
+    function sendMsg(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.btn-send');
+      btn.textContent = '✅ Message envoyé !';
+      btn.style.background = 'linear-gradient(135deg, #33FFB8, #3380FF)';
+      setTimeout(() => {
+        btn.textContent = 'Envoyer le message 🚀';
+        btn.style.background = '';
+        e.target.reset();
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
